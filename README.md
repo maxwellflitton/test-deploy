@@ -1,2 +1,2 @@
-# test-deploy
-basic testing for surrealdb py
+# Testing for python client
+
