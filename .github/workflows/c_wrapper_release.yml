@@ -104,13 +104,13 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-      - name: Update Cargo.toml version and push to GitHub
-        run: |
-          if [ "${{ github.event.inputs.dry_run }}" = "false" ]; then
-            cargo release --verbose --execute --no-confirm ${{ github.event.inputs.type }} --no-publish --no-verify
-          else
-            cargo release --verbose ${{ github.event.inputs.type }} --no-publish --no-verify
-          fi
+      # - name: Update Cargo.toml version and push to GitHub
+      #   run: |
+      #     if [ "${{ github.event.inputs.dry_run }}" = "false" ]; then
+      #       cargo release --verbose --execute --no-confirm ${{ github.event.inputs.type }} --no-publish --no-verify
+      #     else
+      #       cargo release --verbose ${{ github.event.inputs.type }} --no-publish --no-verify
+      #     fi
 
       - name: Extract Version from Cargo.toml
         id: get-version
