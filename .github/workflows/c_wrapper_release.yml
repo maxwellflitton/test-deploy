@@ -141,6 +141,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build release binary
+        shell: bash  # Forces the step to use Bash
         run: |
           if [[ "${{ matrix.platform.linux-override }}" == "true" ]]; then
             rustup target add aarch64-unknown-linux-gnu
@@ -148,6 +149,7 @@ jobs:
           else
             cargo build -p c-wrapper --release --verbose
           fi
+
 
       - name: Archive binary
         uses: ksm2/archive-action@v1
