@@ -7,17 +7,13 @@ on:
         description: 'Type of release (major/minor/patch)'
         required: true
         default: 'minor'
-      dry_run:
-        description: 'Dry run (true/false)'  # Allows a test run without making actual changes
-        required: true
-        default: true
+      # dry_run:
+      #   description: 'Dry run (true/false)'  # Allows a test run without making actual changes
+      #   required: true
+      #   default: true
       version:
         description: 'Release version (e.g., 1.2.3)'
         required: true
-      # skip_tests:
-      #   description: 'Skip tests (true/false)'  # Allows skipping tests if needed
-      #   required: true
-      #   default: false
 
 env:
   CARGO_TERM_COLOR: always  # Ensures cargo outputs colored logs
