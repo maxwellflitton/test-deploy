@@ -3,10 +3,6 @@ name: Release to Github
 on:
   workflow_dispatch:  # Allows manual triggering of the workflow
     inputs:
-      type:
-        description: 'Type of release (major/minor/patch)'
-        required: true
-        default: 'minor'
       version:
         description: 'Release version (e.g., 1.2.3)'
         required: true
