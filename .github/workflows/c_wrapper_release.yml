@@ -152,7 +152,7 @@ jobs:
         run: |
           if [[ "${{ matrix.platform.linux-override }}" == "true" ]]; then
             rustup target add aarch64-unknown-linux-gnu
-            cargo build -p c-wrapper --release --target aarch64-unknown-linux-gnu --verbose
+            # cargo build -p c-wrapper --release --target aarch64-unknown-linux-gnu --verbose
           else
             cargo build -p c-wrapper --release --verbose
           fi
