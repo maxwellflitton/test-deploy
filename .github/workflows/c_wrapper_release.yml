@@ -11,6 +11,9 @@ on:
         description: 'Dry run (true/false)'  # Allows a test run without making actual changes
         required: true
         default: true
+      version:
+        description: 'Release version (e.g., 1.2.3)'
+        required: true
       # skip_tests:
       #   description: 'Skip tests (true/false)'  # Allows skipping tests if needed
       #   required: true
@@ -104,18 +107,11 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-      # - name: Update Cargo.toml version and push to GitHub
-      #   run: |
-      #     if [ "${{ github.event.inputs.dry_run }}" = "false" ]; then
-      #       cargo release --verbose --execute --no-confirm ${{ github.event.inputs.type }} --no-publish --no-verify
-      #     else
-      #       cargo release --verbose ${{ github.event.inputs.type }} --no-publish --no-verify
-      #     fi
-
       - name: Extract Version from Cargo.toml
         id: get-version
         run: |
-          VERSION=$(grep '^version = ' Cargo.toml | sed -E 's/version = "(.*)"/\1/')
+          # VERSION=$(grep '^version = ' Cargo.toml | sed -E 's/version = "(.*)"/\1/')
+          VERSION=${{ github.event.inputs.version }}
           echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
           echo "WORKFLOW_GIT_TAG=v$VERSION" >> "$GITHUB_OUTPUT"
 
