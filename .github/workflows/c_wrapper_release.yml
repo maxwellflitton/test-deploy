@@ -109,7 +109,6 @@ jobs:
 
   release:
     needs: [prepare-release]
-    if: ${{ github.event.inputs.dry_run == 'false' }}  # Only run if not a dry run
     strategy:
       matrix:
         platform:
