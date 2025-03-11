@@ -140,6 +140,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install cross-compilation dependencies
+        if: matrix.platform.linux-override == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+      
+
       - name: Build release binary
         shell: bash  # Forces the step to use Bash
         run: |
