@@ -157,6 +157,25 @@ jobs:
             cargo build -p c-wrapper --release --verbose
           fi
 
+      - name: Copy release binary to root
+        shell: bash
+        run: |
+          if [[ -f "target/release/libc_wrapper.so" ]]; then
+            cp target/release/libc_wrapper.so .
+          elif [[ -f "target/release/libc_wrapper.dll" ]]; then
+            cp target/release/libc_wrapper.dll .
+          elif [[ -f "target/release/libc_wrapper.dylib" ]]; then
+            cp target/release/libc_wrapper.dylib .
+          elif [[ -f "target/aarch64-unknown-linux-gnu/release/libc_wrapper.so" ]]; then
+            cp target/aarch64-unknown-linux-gnu/release/libc_wrapper.so .
+          elif [[ -f "target/x86_64-unknown-linux-gnu/release/libc_wrapper.so" ]]; then
+            cp target/x86_64-unknown-linux-gnu/release/libc_wrapper.so .
+          elif [[ -f "target/release/libc_wrapper.dll" ]]; then
+            cp target/release/libc_wrapper.dll .
+          else
+            echo "No binary to copy for this OS."
+          fi    
+
 
       - name: Archive binary
         uses: ksm2/archive-action@v1
