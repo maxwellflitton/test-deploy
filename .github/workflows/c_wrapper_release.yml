@@ -215,6 +215,11 @@ jobs:
           name: "${{ env.FILENAME }}"
           format: "zip"
           include: "{libc_wrapper.so, libc_wrapper.dll,libc_wrapper.dylib,README.md}"
+      
+      - name: Create Git Tag and Push
+        run: |
+          git tag ${{ steps.get-version.outputs.WORKFLOW_GIT_TAG }}
+          git push origin ${{ steps.get-version.outputs.WORKFLOW_GIT_TAG }}
 
       - name: Create or Update Release
         env:
