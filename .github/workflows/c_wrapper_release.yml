@@ -178,6 +178,8 @@ jobs:
       - name: Get Build Info
         id: build-info
         shell: bash
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
         run: |
           OS=$(uname -s | tr '[:upper:]' '[:lower:]')
           if [ "${{ matrix.platform.linux-override }}" = "true" ]; then
@@ -194,7 +196,7 @@ jobs:
           fi
 
           VERSION=$(grep '^version = ' ./modules/c-wrapper/Cargo.toml | sed -E 's/version = "(.*)"/\1/')
-          FILENAME="surrealml-v${github.event.inputs.version}-${TARGET}"
+          FILENAME="surrealml-v${INPUT_VERSION}-${TARGET}"
           echo "OS=$OS" >> "$GITHUB_ENV"
           echo "ARCH=$ARCH" >> "$GITHUB_ENV"
           echo "TARGET=$TARGET" >> "$GITHUB_ENV"
