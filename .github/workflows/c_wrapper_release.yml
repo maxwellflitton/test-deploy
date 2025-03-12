@@ -194,7 +194,7 @@ jobs:
           fi
 
           VERSION=$(grep '^version = ' ./modules/c-wrapper/Cargo.toml | sed -E 's/version = "(.*)"/\1/')
-          FILENAME="surrealml-v${VERSION}-${TARGET}"
+          FILENAME="surrealml-v${github.event.inputs.version}-${TARGET}"
           echo "OS=$OS" >> "$GITHUB_ENV"
           echo "ARCH=$ARCH" >> "$GITHUB_ENV"
           echo "TARGET=$TARGET" >> "$GITHUB_ENV"
