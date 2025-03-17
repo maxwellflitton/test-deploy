@@ -147,6 +147,7 @@ jobs:
           else
             cargo build -p c-wrapper --release --verbose
           fi
+          ls
 
       # - name: Copy release binary to root
       #   shell: bash
