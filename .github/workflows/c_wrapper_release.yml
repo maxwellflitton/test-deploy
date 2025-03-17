@@ -130,20 +130,26 @@ jobs:
           sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
       
       - name: Build release binary for ARM64
-        if: matrix.platform.linux-override == 'true'
+        # if: matrix.platform.linux-override == 'true'
         run: |
-          rustup target add aarch64-unknown-linux-gnu
-          cargo build -p c-wrapper --target aarch64-unknown-linux-gnu --release --verbose
+          if [[ "${{ matrix.platform.linux-override }}" == "true" ]]; then
+            rustup target add aarch64-unknown-linux-gnu
+            cargo build -p c-wrapper --release --target aarch64-unknown-linux-gnu --verbose
+          else
+            echo "bypassing build"
+            # cargo build -p c-wrapper --release --verbose
+          fi
         env:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
 
       - name: Build release binary
         shell: bash  # Forces the step to use Bash
-        if: matrix.platform.linux-override == 'false'
+        # if: matrix.platform.linux-override == 'false'
         run: |
           if [[ "${{ matrix.platform.linux-override }}" == "true" ]]; then
-            rustup target add aarch64-unknown-linux-gnu
-            cargo build -p c-wrapper --release --target aarch64-unknown-linux-gnu --verbose
+            echo "bypassing build"
+            # rustup target add aarch64-unknown-linux-gnu
+            # cargo build -p c-wrapper --release --target aarch64-unknown-linux-gnu --verbose
           else
             cargo build -p c-wrapper --release --verbose
           fi
