@@ -55,56 +55,56 @@ jobs:
       - name: Build project
         run: cargo build --verbose  # Builds the Rust project
 
-  # prepare-release:
-  #   needs: [build]  # Runs only after build job completes
-  #   runs-on: ubuntu-latest  # Ensures consistent release process
-  #   outputs:
-  #     rr_cargo_version: ${{ steps.get-version.outputs.VERSION }}
-  #     workflow_git_tag: ${{ steps.get-version.outputs.WORKFLOW_GIT_TAG }}
-  #   steps:
-  #     - name: Checkout repository with full history
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0  # Required for versioning
-  #         token: ${{ secrets.RELEASE_TOKEN }}  # Uses a token with release permissions
+  prepare-release:
+    needs: [build]  # Runs only after build job completes
+    runs-on: ubuntu-latest  # Ensures consistent release process
+    outputs:
+      rr_cargo_version: ${{ steps.get-version.outputs.VERSION }}
+      workflow_git_tag: ${{ steps.get-version.outputs.WORKFLOW_GIT_TAG }}
+    steps:
+      - name: Checkout repository with full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Required for versioning
+          token: ${{ secrets.RELEASE_TOKEN }}  # Uses a token with release permissions
 
-  #     - name: Install Rust Target for Linux Arm if needed
-  #       shell: bash
-  #       run: |
-  #         if [ "${{ matrix.platform.linux-override }}" = "true" ]; then
-  #           rustup target add aarch64-unknown-linux-gnu
-  #         fi
+      - name: Install Rust Target for Linux Arm if needed
+        shell: bash
+        run: |
+          if [ "${{ matrix.platform.linux-override }}" = "true" ]; then
+            rustup target add aarch64-unknown-linux-gnu
+          fi
 
-  #     - name: Cache Cargo dependencies
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: |
-  #           ~/.cargo/registry
-  #           ~/.cargo/index
-  #           target
-  #         key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ hashFiles('**/Cargo.toml') }}
+      - name: Cache Cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/index
+            target
+          key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ hashFiles('**/Cargo.toml') }}
 
-  #     - name: Install cargo-release
-  #       run: |
-  #         if ! command -v cargo-release &> /dev/null; then
-  #           cargo install cargo-release
-  #         fi
+      - name: Install cargo-release
+        run: |
+          if ! command -v cargo-release &> /dev/null; then
+            cargo install cargo-release
+          fi
 
-  #     - name: Configure Git
-  #       run: |
-  #         git config --global user.name "GitHub Action"
-  #         git config --global user.email "action@github.com"
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
 
-      # - name: Extract Version from Cargo.toml
-      #   id: get-version
-      #   run: |
-      #     # VERSION=$(grep '^version = ' Cargo.toml | sed -E 's/version = "(.*)"/\1/')
-      #     VERSION=${{ github.event.inputs.version }}
-      #     echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
-      #     echo "WORKFLOW_GIT_TAG=v$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Extract Version from Cargo.toml
+        id: get-version
+        run: |
+          # VERSION=$(grep '^version = ' Cargo.toml | sed -E 's/version = "(.*)"/\1/')
+          VERSION=${{ github.event.inputs.version }}
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "WORKFLOW_GIT_TAG=v$VERSION" >> "$GITHUB_OUTPUT"
 
   release:
-    # needs: [prepare-release]
+    needs: [prepare-release]
     strategy:
       matrix:
         platform:
