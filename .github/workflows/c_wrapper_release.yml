@@ -130,6 +130,7 @@ jobs:
           sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
       
       - name: Build release binary for ARM64
+        shell: bash  # Forces the step to use Bash
         # if: matrix.platform.linux-override == 'true'
         run: |
           if [[ "${{ matrix.platform.linux-override }}" == "true" ]]; then
