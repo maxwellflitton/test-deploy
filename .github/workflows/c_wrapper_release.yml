@@ -175,31 +175,31 @@ jobs:
       #       echo "No binary to copy for this OS."
       #     fi    
 
-      - name: Copy release binary to root
-        shell: bash
-        run: |
-          ls
-          cd target && ls && cd release && ls
-          if [[ "${{ matrix.platform.linux-override }}" = "true" ]]; then
-            cp target/aarch64-unknown-linux-gnu/release/libc_wrapper.so .
-          else
-            case "${{ runner.os }}" in
-              Linux)
-                cp target/release/libc_wrapper.so .
-                ;;
-              macOS)
-                cp target/release/libc_wrapper.dylib .
-                ;;
-              Windows)
-                cp target/release/libc_wrapper.dll .
-                ;;
-              *)
-                echo "Unsupported OS for copying binary"
-                cd target && ls && cd release && ls
-                exit 1
-                ;;
-            esac
-          fi
+      # - name: Copy release binary to root
+      #   shell: bash
+      #   run: |
+      #     ls
+      #     cd target && ls && cd release && ls
+      #     if [[ "${{ matrix.platform.linux-override }}" = "true" ]]; then
+      #       cp target/aarch64-unknown-linux-gnu/release/libc_wrapper.so .
+      #     else
+      #       case "${{ runner.os }}" in
+      #         Linux)
+      #           cp target/release/libc_wrapper.so .
+      #           ;;
+      #         macOS)
+      #           cp target/release/libc_wrapper.dylib .
+      #           ;;
+      #         Windows)
+      #           cp target/release/libc_wrapper.dll .
+      #           ;;
+      #         *)
+      #           echo "Unsupported OS for copying binary"
+      #           cd target && ls && cd release && ls
+      #           exit 1
+      #           ;;
+      #       esac
+      #     fi
 
       - name: Archive binary
         uses: ksm2/archive-action@v1
