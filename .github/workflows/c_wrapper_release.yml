@@ -170,6 +170,7 @@ jobs:
       - name: Copy release binary to root
         shell: bash
         run: |
+          ls
           cd target && ls && cd release && ls
           if [[ "${{ matrix.platform.linux-override }}" = "true" ]]; then
             cp target/aarch64-unknown-linux-gnu/release/libc_wrapper.so .
