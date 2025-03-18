@@ -17,12 +17,12 @@ jobs:
         platform:
           - os: ubuntu-latest
             linux-override: false
-          # - os: macos-13
-          #   linux-override: false
-          # - os: macos-14
-          #   linux-override: false
-          # - os: windows-latest
-          #   linux-override: false
+          - os: macos-13
+            linux-override: false
+          - os: macos-14
+            linux-override: false
+          - os: windows-latest
+            linux-override: false
           - os: ubuntu-latest  # Extra Ubuntu build for ARM support
             linux-override: true
     runs-on: ${{ matrix.platform.os }}
@@ -110,12 +110,12 @@ jobs:
         platform:
           - os: ubuntu-latest
             linux-override: false
-          # - os: macos-13
-          #   linux-override: false
-          # - os: macos-14
-          #   linux-override: false
-          # - os: windows-latest
-          #   linux-override: false
+          - os: macos-13
+            linux-override: false
+          - os: macos-14
+            linux-override: false
+          - os: windows-latest
+            linux-override: false
           - os: ubuntu-latest
             linux-override: true
     runs-on: ${{ matrix.platform.os }}
