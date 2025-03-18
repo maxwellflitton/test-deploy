@@ -243,7 +243,7 @@ jobs:
         with:
           name: "${{ env.FILENAME }}"
           format: "tar.gz"
-          include: "{libc_wrapper.so, libc_wrapper.dll,libc_wrapper.dylib,README.md}"
+          include: "{libc_wrapper.so, c_wrapper.dll,libc_wrapper.dylib,README.md}"
 
       - name: Compress zip
         uses: ksm2/archive-action@v1
