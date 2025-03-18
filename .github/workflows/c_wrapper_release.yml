@@ -123,11 +123,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install cross-compilation dependencies
-        if: matrix.platform.linux-override == 'true'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+      # - name: Install cross-compilation dependencies
+      #   shell: bash  # Forces the step to use Bash
+      #   # if: matrix.platform.linux-override == 'true'
+      #   run: |
+      #     if [[ "${{ matrix.platform.linux-override }}" == "true" ]]; then
+      #       sudo apt-get update
+      #       sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+      #       rustup target add aarch64-unknown-linux-gnu
+      #       cargo build -p c-wrapper --release --target aarch64-unknown-linux-gnu --verbose
+      #     else
+      #       echo "bypassing build"
+      #       # cargo build -p c-wrapper --release --verbose
+      #     fi
+      #     sudo apt-get update
+      #     sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
       
       - name: Build release binary for ARM64
         shell: bash  # Forces the step to use Bash
@@ -135,6 +145,12 @@ jobs:
         run: |
           if [[ "${{ matrix.platform.linux-override }}" == "true" ]]; then
             sudo apt-get update
+            sudo apt-get install -y \
+              gcc-aarch64-linux-gnu \
+              libc6-dev-arm64-cross \
+              build-essential \
+              gcc-aarch64-linux-gnu \
+              g++-aarch64-linux-gnu
             sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
             rustup target add aarch64-unknown-linux-gnu
             cargo build -p c-wrapper --release --target aarch64-unknown-linux-gnu --verbose
